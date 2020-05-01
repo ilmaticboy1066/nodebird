@@ -8,7 +8,12 @@ const flash = require('connect-flash');
 //To hide the cookie password
 require('dotenv').config();
 
+const pageRouter = require('./routes/page');
+const { sequelize} = require('./models');
+
 const app = express();
+sequelize.sync();
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -30,7 +35,8 @@ app.use(session({
 }));
 app.use(flash());
 
-const pageRouter = require('./routes/page');
+
+
 app.use('/', pageRouter);
 
 app.use((req, res, next) => {
